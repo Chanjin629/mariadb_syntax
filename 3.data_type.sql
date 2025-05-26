@@ -45,6 +45,7 @@ insert into post(id,title,author_id) values(10,'hello',3)
 select * from author where id>=2 and id<=4;
 select * from author where id between 2 and 4;
 select * from author where id in(2,3,4);
+select * from post where author_id in(select id from author where name='hong');
 
 -- like : 특정문자를 포함하는 데이터를 조회 하기위한 키워드
 select * from post where title like 'h%';
