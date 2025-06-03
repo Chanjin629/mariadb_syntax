@@ -105,3 +105,27 @@ sadd posting:likes:1 a1@naver.com
 smembers posting:likes:1
 
 # zset : sorted set
+# zset을 활용해서 최근시간순으로 정렬가능
+# zset도 set이므로 같은 상품을 add할 경우에 중복이 제거되고, score(시간간)값만 업데이트 
+zadd user:1:recent:product 091330 mango
+zadd user:1:recent:product 091331 apple  # apple 최근근에 들어온게 남아있고 원래있던게 삭제
+zadd user:1:recent:product 091332 banana
+zadd user:1:recent:product 091333 orange
+zadd user:1:recent:product 091324 apple
+
+# zset조회 : zrange(score기준오른차순), zrevrange(score기준내림차순)
+zrange user:1:recent:product 0 2
+zrevrange user:1:recent:product 0 2
+# withscores를 통해 score 값까지 같이 출력
+zrevrange user:1:recent:product 0 2 withscores
+
+# hashes : value가 map형태의 자료구조(key:value, key:value ... 형태의 자료구조)
+set member:info:1 "{\"name\":\"hong\", \"email\":\"hong@daum.net\", \"age\":30}" 
+hset set member:info:1 name hong email hong@daum.net age 30
+# 특정값 조회
+hget member:info:1 name
+# 모든객체값 조회
+hgetall member:info:1 
+# 특정 요소값 수정
+hset member:info:1 name hong2
+# redis활용상황 : 빈번하고 변경되는 객체값을 저장시 효율적
